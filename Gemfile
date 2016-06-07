@@ -3,4 +3,4 @@ source 'https://rubygems.org'
 gem 'rack'
 gem 'minitest'
 
-ruby '2.2.4'
+ruby '2.1.5'
