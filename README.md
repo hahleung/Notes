@@ -1,6 +1,6 @@
 # Notes
 
-This program is written is Ruby, using Rack.
+This program is written in Ruby, using Rack for website part.
 
 For launching web application:
 - `rackup` when you are in the root of the application

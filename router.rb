@@ -1,5 +1,6 @@
 require_relative 'services/notes.rb'
 require_relative 'views/welcome.rb'
+require_relative 'views/creation.rb'
 
 module Router
   class Controller
