@@ -2,8 +2,9 @@ require 'minitest/autorun'
 require 'rack'
 require 'digest'
 require_relative '../../services/notes.rb'
+require_relative '../../models/notes.rb'
 
-class NotesTest < Minitest::Unit::TestCase
+class ServiceNotesTest < Minitest::Unit::TestCase
   TEST_TITLE = 'My Title'
   TEST_BODY = 'My Body'
   TEST_PASSWORD = 'My Password'
@@ -20,10 +21,11 @@ class NotesTest < Minitest::Unit::TestCase
     request = Rack::Request.new(ENVIRONMENT)
 
     note = Service::Note.new_note(request)
+    decrypted_body = Model::Note.decrypt_body(note.body)
 
-    assert_equal note.title, TEST_TITLE
-    assert_equal note.body, TEST_BODY
-    assert_equal note.password, ENCRYPTED_PASSWORD
-    assert_equal note.id.length, ID_LENGTH
+    assert_equal TEST_TITLE, note.title
+    assert_equal TEST_BODY, decrypted_body
+    assert_equal ENCRYPTED_PASSWORD, note.password
+    assert_equal ID_LENGTH, note.id.length
   end
 end

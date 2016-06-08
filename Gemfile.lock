@@ -1,7 +1,13 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    mini_portile2 (2.1.0)
     minitest (5.9.0)
+    nokogiri (1.6.8)
+      mini_portile2 (~> 2.1.0)
+      pkg-config (~> 1.1.7)
+    openssl (0.2.0)
+    pkg-config (1.1.7)
     rack (1.6.4)
 
 PLATFORMS
@@ -9,6 +15,8 @@ PLATFORMS
 
 DEPENDENCIES
   minitest
+  nokogiri
+  openssl
   rack
 
 RUBY VERSION

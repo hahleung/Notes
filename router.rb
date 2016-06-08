@@ -28,10 +28,10 @@ module Router
       if get(request, Path::HOME)
         View::Welcome.show
 
-      elsif get(request, PATH::CREATION)
+      elsif get(request, Path::CREATION)
         View::Creation.show
 
-      elsif get(request, PATH::RETRIEVAL)
+      elsif get(request, Path::RETRIEVAL)
 
       elsif post(request, Path::CREATION)
         Service::Note.save(request)

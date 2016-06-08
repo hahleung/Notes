@@ -1,21 +1,26 @@
 require 'minitest/autorun'
+require 'digest'
 require_relative '../../models/notes.rb'
 
-class NotesTest < Minitest::Unit::TestCase
-  TEST_TITLE = 'My Title'
-  TEST_BODY = 'My Body'
-  TEST_PASSWORD = 'My Password'
+class ModelNotesTest < Minitest::Unit::TestCase
+  TEST_TITLE = 'My Title'.freeze
+  TEST_BODY = 'My Body'.freeze
+  TEST_PASSWORD = 'My Password'.freeze
+  ENCRYPTED_PASSWORD = Digest::MD5.digest(TEST_PASSWORD)
+  ID_LENGTH = 20
 
-  def initialization
+  def test_initialization
     note = Model::Note.new(
       TEST_TITLE,
       TEST_BODY,
       TEST_PASSWORD
     )
 
-    assert_equal note.title, TEST_TITLE
-    assert_equal note.body, TEST_BODY
-    assert_equal note.password, TEST_PASSWORD
-    assert_equal note.id.length, 10
+    decrypted_body = Model::Note.decrypt_body(note.body)
+
+    assert_equal TEST_TITLE, note.title
+    assert_equal TEST_BODY, decrypted_body
+    assert_equal ENCRYPTED_PASSWORD, note.password
+    assert_equal ID_LENGTH, note.id.length
   end
 end
