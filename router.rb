@@ -32,9 +32,26 @@ module Router
         View::Creation.show
 
       elsif get(request, Path::RETRIEVAL)
+        View::Retrieval.show
 
       elsif post(request, Path::CREATION)
         Service::Note.save(request)
+        View::Blank.show
+
+      elsif post(request, Path::RETRIEVAL)
+        #note = Service::Note.unmarshal_note(request)
+        View::Blank.show
+
+      elsif get(request, Path::CREATION_SUCCESS)
+        id = Service::Note.give_id(request)
+        View::Creation_success.show(id)
+
+      elsif get(request, Path::RETRIEVAL_SUCCESS)
+        note = Service::Note.retrieve_note(request)
+        View::Retrieval_success.show(note.title, note.body)
+
+      else
+        View::Error.show
 
       end
     end

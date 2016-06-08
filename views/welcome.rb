@@ -1,6 +1,6 @@
 require 'nokogiri'
-require_relative 'setting.rb'
-require_relative 'buttons.rb'
+require_relative 'common/setting.rb'
+require_relative 'common/buttons.rb'
 
 module View
   class Welcome

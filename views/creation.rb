@@ -1,7 +1,7 @@
 require 'nokogiri'
-require_relative 'setting.rb'
-require_relative 'buttons.rb'
-require_relative 'text.rb'
+require_relative 'common/setting.rb'
+require_relative 'common/buttons.rb'
+require_relative 'common/text.rb'
 
 module View
   class Creation
@@ -41,7 +41,7 @@ module View
                   placeholder: 'Write a password for your note',
                   name: 'password'
                 )
-                Button.confirm(doc, type: 'form', value: 'Create Note')
+                Button.confirm(doc, type: 'hidden', value: 'Create Note')
               end
 
             end
