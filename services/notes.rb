@@ -53,6 +53,7 @@ module Service
       #A yaml file is implemented here, a database will be
       #more appropriate for a next implementation.
       File.write("#{id}.yml", marshalled_note.to_yaml)
+      id
     end
 
     def self.read(request)

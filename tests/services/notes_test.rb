@@ -9,7 +9,7 @@ class ServiceNotesTest < Minitest::Unit::TestCase
   TEST_BODY = 'My Body'
   TEST_PASSWORD = 'My Password'
   ENCRYPTED_PASSWORD = Digest::MD5.digest(TEST_PASSWORD)
-  ID_LENGTH = 20
+  ID_LENGTH = 10
 
   ENVIRONMENT = Rack::MockRequest.env_for(
     '',

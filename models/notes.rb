@@ -11,7 +11,7 @@ module Model
       @title = title
       @body = Note.encrypt_body(body)
       @password = Digest::MD5.digest(password)
-      @id = SecureRandom.hex(10)
+      @id = SecureRandom.hex(5)
     end
 
     def self.encrypt_body(body)

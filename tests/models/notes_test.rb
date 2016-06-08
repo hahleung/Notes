@@ -7,7 +7,7 @@ class ModelNotesTest < Minitest::Unit::TestCase
   TEST_BODY = 'My Body'.freeze
   TEST_PASSWORD = 'My Password'.freeze
   ENCRYPTED_PASSWORD = Digest::MD5.digest(TEST_PASSWORD)
-  ID_LENGTH = 20
+  ID_LENGTH = 10
 
   def test_initialization
     note = Model::Note.new(

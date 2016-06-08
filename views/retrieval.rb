@@ -4,12 +4,12 @@ require_relative 'common/buttons.rb'
 require_relative 'common/text.rb'
 
 module View
-  class Creation
+  class Retrieval
     def self.show
-      creation = Nokogiri::HTML::Builder.new do |doc|
+      retrieval = Nokogiri::HTML::Builder.new do |doc|
         doc.html do
           doc.head do
-            Setting.define_head(doc, title: "Notes - creation")
+            Setting.define_head(doc, title: "Notes - retrieval")
           end
 
           doc.body Setting.body  do
@@ -18,30 +18,24 @@ module View
             doc.div Setting.container do
               Setting.jumbotron(
                 doc,
-                head: 'Create notes',
-                body: 'Please fill the blanks, an ID will be given to you, do not loose it.'
+                head: 'Retrieval a note',
+                body: 'Please the appropriate information in order to retrieve a note.'
               )
 
-              doc. form :action => '/creation', :method => 'POST', :class => 'form-horizontal' do
+              doc. form :action => '/retrieval', :method => 'POST', :class => 'form-horizontal' do
                 View::Text.form(
                   doc,
-                  label: 'Title',
-                  placeholder: 'Write a title for your note',
-                  name: 'title'
-                )
-                View::Text.form(
-                  doc,
-                  label: 'Body',
-                  placeholder: 'Write a body for your note',
-                  name: 'body'
+                  label: 'ID',
+                  placeholder: 'If you have created a note, an ID was given to you',
+                  name: 'id'
                 )
                 View::Text.form(
                   doc,
                   label: 'Password',
-                  placeholder: 'Write a password for your note',
+                  placeholder: 'You have lock your note with a password... Theoretically.',
                   name: 'password'
                 )
-                Button.confirm(doc, type: 'hidden', value: 'Create Note')
+                Button.confirm(doc, type: 'hidden', value: 'Retrieve note')
               end
 
               doc.form :action => '/', :method => 'GET', :class => 'form-horizontal' do
@@ -52,7 +46,7 @@ module View
           end
         end
       end
-      [creation.to_html]
+      [retrieval.to_html]
     end
   end
 end

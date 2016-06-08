@@ -1,6 +1,10 @@
 require_relative 'services/notes.rb'
 require_relative 'views/welcome.rb'
 require_relative 'views/creation.rb'
+require_relative 'views/retrieval.rb'
+require_relative 'views/creation_success.rb'
+require_relative 'views/retrieval_success.rb'
+require_relative 'views/error.rb'
 
 module Router
   class Controller
@@ -10,6 +14,8 @@ module Router
       HOME = '/'.freeze
       CREATION = '/creation'.freeze
       RETRIEVAL = '/retrieval'.freeze
+      CREATION_SUCCESS = '/creation_success'.freeze
+      RETRIEVAL_SUCCESS = '/retrieval_success'.freeze
     end
 
     module Method
@@ -19,7 +25,8 @@ module Router
 
     def self.give_response(request)
       body = select_body(request)
-      status = select_status(request)
+      #status = select_status(request)
+      status = 200
       headers = HTML_HEADER
       [body, status, headers]
     end
@@ -35,20 +42,24 @@ module Router
         View::Retrieval.show
 
       elsif post(request, Path::CREATION)
-        Service::Note.save(request)
-        View::Blank.show
+        id = Service::Note.save(request)
+        #View::Blank.show
+        View::CreationSuccess.show(id)
 
       elsif post(request, Path::RETRIEVAL)
-        #note = Service::Note.unmarshal_note(request)
-        View::Blank.show
-
-      elsif get(request, Path::CREATION_SUCCESS)
-        id = Service::Note.give_id(request)
-        View::Creation_success.show(id)
-
-      elsif get(request, Path::RETRIEVAL_SUCCESS)
         note = Service::Note.retrieve_note(request)
-        View::Retrieval_success.show(note.title, note.body)
+        #View::Blank.show
+        View::RetrievalSuccess.show(note.title, note.body)
+
+      #PATTERN POST-GET HAVE TO BE IMPLEMENTED:
+
+      #elsif get(request, Path::CREATION_SUCCESS)
+      #  id = Service::Note.give_id(request)
+      #  View::Creation_success.show(id)
+
+      #elsif get(request, Path::RETRIEVAL_SUCCESS)
+      #  note = Service::Note.retrieve_note(request)
+      #  View::Retrieval_success.show(note.title, note.body)
 
       else
         View::Error.show
