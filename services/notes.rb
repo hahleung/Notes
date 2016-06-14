@@ -43,8 +43,7 @@ module Service
     def self.save(note)
       marshalled_note = marshal(note)
       id = marshalled_note[ID]
-      File.write("#{id}.yml", marshalled_note.to_yaml)
-      id
+      [id, marshalled_note]
     end
   end
 end

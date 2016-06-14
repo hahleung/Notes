@@ -6,5 +6,7 @@
 !ruby/class 'Error::BodyEmpty': Not so much fun, your body is empty!
 !ruby/class 'Error::NoPassword': No password in form...
 !ruby/class 'Error::PasswordEmpty': Without password, how could you retrieve your (fabulous) note?
+
+!ruby/class 'Error::IDNotFound': Problem with the ID, are you sure about it?
 !ruby/class 'Error::AccessDenied': Hu? Are you trying to retrieve a note that isn't yours?
 

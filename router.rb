@@ -1,6 +1,7 @@
 require 'yaml'
 require_relative 'services/notes.rb'
 require_relative 'control/notes.rb'
+require_relative 'storage/main_store.rb'
 require_relative 'views/welcome.rb'
 require_relative 'views/creation.rb'
 require_relative 'views/retrieval.rb'
@@ -58,15 +59,20 @@ module Router
 
       elsif post(request, Path::CREATION)
         note = Control::Note.new_note(request)
-        id = Service::Note.save(note)
+        id, note = Service::Note.save(note)
+        Storage::MainStore.new(Storage::FileStore).save(id, note)
         View::CreationSuccess.show(id)
 
       elsif post(request, Path::RETRIEVAL)
-        note = Control::Note.retrieve_note(request)
+        id, password = Control::Note.retrieve_note(request)
+        p id
+        p password
+        file = Storage::MainStore.new(Storage::FileStore).read(id, password)
+        p 'here file'
+        p file
+        note = Service::Note.retrieve(file)
         p note
-        retrieved_note = Service::Note.retrieve(note)
-        p retrieved_note
-        View::RetrievalSuccess.show(retrieved_note.title, retrieved_note.body)
+        View::RetrievalSuccess.show(note.title, note.body)
 
       elsif get(request, Path::ABOUT)
         View::About.show

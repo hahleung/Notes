@@ -7,5 +7,6 @@ module Error
   class NoPassword < ArgumentError; end
   class PasswordEmpty < ArgumentError; end
 
+  class IDNotFound < RangeError; end
   class AccessDenied < RangeError; end
 end

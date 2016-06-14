@@ -1,13 +1,13 @@
-require 'yaml'
 require 'digest'
 require_relative 'errors/errors.rb'
 
 module Control
+  TITLE = 'title'.freeze
+  BODY = 'body'.freeze
+  PASSWORD = 'password'.freeze
+  ID = 'id'.freeze
+
   class Note
-    TITLE = 'title'.freeze
-    BODY = 'body'.freeze
-    PASSWORD = 'password'.freeze
-    ID = 'id'.freeze
     Note = Struct.new(:title, :body, :password)
 
     def self.new_note(request)
@@ -40,12 +40,7 @@ module Control
       raise Error::PasswordEmpty if data[PASSWORD].empty?
       password = Digest::MD5.digest(data[PASSWORD])
 
-      note = YAML.load(File.read("#{id}.yml"))
-      if note[PASSWORD] == password
-        note
-      else
-        raise Error::AccessDenied
-      end
+      [id, password]
     end
   end
 end
