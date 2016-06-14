@@ -25,6 +25,9 @@ module View
               Setting.title_h2(doc, 'Language')
               doc.p 'This web app was written in Ruby.'
 
+              Setting.title_h2(doc, 'Improvement')
+              doc.p '- Enable modification of existing notes.'
+
               Picture.enigma(doc)
 
               doc.form :action => '/', :method => 'GET', :class => 'form-horizontal' do

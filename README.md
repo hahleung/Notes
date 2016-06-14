@@ -4,7 +4,7 @@ With this web app, you can create notes and safely store them thanks to an ID an
 It is written in Ruby, using Rack for website part.
 
 For distant access:
-- http://herokuapp.com.
+- http://safe-notes.herokuapp.com.
 
 For launching web application locally:
 - `rackup` when you are in the root of the application
