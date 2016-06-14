@@ -1,0 +1,10 @@
+---
+!ruby/class 'Error::EmptyPost': No data received!
+!ruby/class 'Error::NoTitle': No title in form...
+!ruby/class 'Error::TitleEmpty': So sad, no title for your note!
+!ruby/class 'Error::NoBody': No body in form...
+!ruby/class 'Error::BodyEmpty': Not so much fun, your body is empty!
+!ruby/class 'Error::NoPassword': No password in form...
+!ruby/class 'Error::PasswordEmpty': Without password, how could you retrieve your (fabulous) note?
+!ruby/class 'Error::AccessDenied': Hu? Are you trying to retrieve a note that isn't yours?
+

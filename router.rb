@@ -1,9 +1,13 @@
+require 'yaml'
 require_relative 'services/notes.rb'
+require_relative 'control/notes.rb'
 require_relative 'views/welcome.rb'
 require_relative 'views/creation.rb'
 require_relative 'views/retrieval.rb'
 require_relative 'views/creation_success.rb'
 require_relative 'views/retrieval_success.rb'
+require_relative 'views/about.rb'
+require_relative 'views/tutorial.rb'
 require_relative 'views/error.rb'
 
 module Router
@@ -16,6 +20,8 @@ module Router
       RETRIEVAL = '/retrieval'.freeze
       CREATION_SUCCESS = '/creation_success'.freeze
       RETRIEVAL_SUCCESS = '/retrieval_success'.freeze
+      ABOUT = '/about'.freeze
+      TUTORIAL = '/tutorial'.freeze
     end
 
     module Method
@@ -25,8 +31,17 @@ module Router
 
     def self.give_response(request)
       body = select_body(request)
-      #status = select_status(request)
       status = 200
+      headers = HTML_HEADER
+      [body, status, headers]
+    end
+
+    def self.error_response(error_class)
+      messages = YAML.load(File.read('error_messages.yml'))
+      message = messages.values_at(error_class).shift
+
+      body = View::Error.show(message)
+      status = 404
       headers = HTML_HEADER
       [body, status, headers]
     end
@@ -42,37 +57,26 @@ module Router
         View::Retrieval.show
 
       elsif post(request, Path::CREATION)
-        id = Service::Note.save(request)
-        #View::Blank.show
+        note = Control::Note.new_note(request)
+        id = Service::Note.save(note)
         View::CreationSuccess.show(id)
 
       elsif post(request, Path::RETRIEVAL)
-        note = Service::Note.retrieve_note(request)
-        #View::Blank.show
-        View::RetrievalSuccess.show(note.title, note.body)
+        note = Control::Note.retrieve_note(request)
+        p note
+        retrieved_note = Service::Note.retrieve(note)
+        p retrieved_note
+        View::RetrievalSuccess.show(retrieved_note.title, retrieved_note.body)
 
-      #PATTERN POST-GET HAVE TO BE IMPLEMENTED:
+      elsif get(request, Path::ABOUT)
+        View::About.show
 
-      #elsif get(request, Path::CREATION_SUCCESS)
-      #  id = Service::Note.give_id(request)
-      #  View::Creation_success.show(id)
-
-      #elsif get(request, Path::RETRIEVAL_SUCCESS)
-      #  note = Service::Note.retrieve_note(request)
-      #  View::Retrieval_success.show(note.title, note.body)
+      elsif get(request, Path::TUTORIAL)
+        View::Tutorial.show
 
       else
-        View::Error.show
+        View::Error.show('Are you lost?')
 
-      end
-    end
-
-    def self.select_status(request)
-      method = request.request_method
-      if method == Method::POST
-        302
-      else
-        200
       end
     end
 

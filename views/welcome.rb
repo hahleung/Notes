@@ -8,7 +8,7 @@ module View
       welcome = Nokogiri::HTML::Builder.new do |doc|
         doc.html do
           doc.head do
-            Setting.define_head(doc, title: "Notes")
+            Setting.define_head(doc, title: "Notes - Welcome")
           end
 
           doc.body Setting.body  do
@@ -17,16 +17,21 @@ module View
             doc.div Setting.container do
               Setting.jumbotron(
                 doc,
-                head: 'What do you want to do?',
-                body: 'You can create notes or access to one with ID and password.'
+                head: 'Welcome!',
+                body: 'Here is a naive web application for storing notes and retrieving them with an ID and a password. So simple!'
               )
 
+              Setting.title_h2(doc, "What do you want to do?")
+              doc.p "Follow the tutorial if needed."
+
+              Picture.welcome(doc)
+
               doc. form :action => '/creation', :method => 'GET', :class => 'form-horizontal' do
-                Button.confirm(doc, type: 'form', value: 'Create Note')
+                Button.confirm(doc, type: 'welcome', value: 'Create Note')
               end
 
               doc. form :action => '/retrieval', :method => 'GET', :class => 'form-horizontal' do
-                Button.confirm(doc, type: 'form', value: 'Retrieve Note')
+                Button.confirm(doc, type: 'welcome', value: 'Retrieve Note')
               end
 
             end

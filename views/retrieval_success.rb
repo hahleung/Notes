@@ -23,13 +23,15 @@ module View
               )
 
               Setting.title_h2(doc, "Title")
-              doc.p "#{title}"
+              doc.text "#{title}"
 
-              Setting.title_h2(doc, "Body")
-              doc.p "#{body}"
+              Setting.title_h2(doc, "Contents")
+              doc.text "#{body}"
+
+              Picture.success(doc)
 
               doc.form :action => '/', :method => 'GET', :class => 'form-horizontal' do
-                Button.confirm(doc, type: 'form', value: 'GO HOME')
+                Button.confirm(doc, type: 'success', value: 'GO HOME')
               end
 
             end

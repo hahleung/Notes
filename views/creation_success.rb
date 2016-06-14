@@ -23,11 +23,13 @@ module View
               )
 
               Setting.title_h2(doc, "Your note ID")
-              doc.p "Here is your note ID, do not loose it, as it will be asked in order to retrieve your note"
-doc.p "#{id}"
+              doc.p "Here is your note ID, do not lose it, as it will be asked in order to retrieve your note"
+              doc.p "#{id}"
+
+              Picture.success(doc)
 
               doc.form :action => '/', :method => 'GET', :class => 'form-horizontal' do
-                Button.confirm(doc, type: 'form', value: 'GO HOME')
+                Button.confirm(doc, type: 'success', value: 'GO HOME')
               end
 
             end

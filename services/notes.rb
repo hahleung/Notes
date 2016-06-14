@@ -1,6 +1,5 @@
 require 'yaml'
 require_relative '../models/notes.rb'
-require_relative '../control/notes.rb'
 
 module Service
   Retrieved_note = Struct.new(:title, :body)
@@ -13,25 +12,19 @@ module Service
     PASSWORD = 'password'.freeze
     ID = 'id'.freeze
 
-    def self.new_note(request)
-      note = Control::Note.new_note(request)
-      Model::Note.new(note.title, note.body, note.password)
-    end
-
-    def self.marshal_note(request)
-      note = new_note(request)
+    def self.marshal(note)
+      new_note = Model::Note.new(note.title, note.body, note.password)
       {
-        TITLE => note.title,
-        BODY_MSG => note.body.message,
-        BODY_KEY => note.body.key,
-        BODY_IV => note.body.iv,
-        PASSWORD => note.password,
-        ID => note.id
+        TITLE => new_note.title,
+        BODY_MSG => new_note.body.message,
+        BODY_KEY => new_note.body.key,
+        BODY_IV => new_note.body.iv,
+        PASSWORD => new_note.password,
+        ID => new_note.id
       }
     end
 
-    def self.unmarshal_note(request)
-      note = read(request)
+    def self.unmarshal(note)
       title = note[TITLE]
       encrypted_body = Model::Encrypted_body.new(
         note[BODY_MSG],
@@ -42,22 +35,16 @@ module Service
       [title, body]
     end
 
-    def self.retrieve_note(request)
-      title, body = unmarshal_note(request)
+    def self.retrieve(note)
+      title, body = unmarshal(note)
       Retrieved_note.new(title, body)
     end
 
-    def self.save(request)
-      marshalled_note = marshal_note(request)
+    def self.save(note)
+      marshalled_note = marshal(note)
       id = marshalled_note[ID]
-      #A yaml file is implemented here, a database will be
-      #more appropriate for a next implementation.
       File.write("#{id}.yml", marshalled_note.to_yaml)
       id
-    end
-
-    def self.read(request)
-      Control::Note.retrieve_note(request)
     end
   end
 end

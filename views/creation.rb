@@ -18,34 +18,35 @@ module View
             doc.div Setting.container do
               Setting.jumbotron(
                 doc,
-                head: 'Create notes',
-                body: 'Please fill the blanks, an ID will be given to you, do not loose it.'
+                head: 'Creating notes',
+                body: 'Please fill the blanks, an ID will be given to you, do not lose it.'
               )
 
-              doc. form :action => '/creation', :method => 'POST', :class => 'form-horizontal' do
+              Setting.title_h2(doc, "Some useful information")
+              doc.p 'The content of your note is encrypted in storage with random key AES-128-CBC. The access to this key is possible by given the ID and the password of the note.'
+              doc.p "Your password is detroyed at the very moment you're submitting contents. Simply, don't lose it, because passwords aren't stored; precisely, passwords are hashed with MD5 function."
+
+              Setting.title_h2(doc, "Creating notes!")
+              doc.form :action => '/creation', :method => 'POST', :class => 'form-horizontal' do
                 View::Text.form(
                   doc,
                   label: 'Title',
-                  placeholder: 'Write a title for your note',
+                  placeholder: 'Give a title to your note',
                   name: 'title'
                 )
-                View::Text.form(
+                View::Text_body.form(
                   doc,
                   label: 'Body',
-                  placeholder: 'Write a body for your note',
+                  placeholder: 'Write the content of your note',
                   name: 'body'
                 )
-                View::Text.form(
+                View::Text_password.form(
                   doc,
                   label: 'Password',
-                  placeholder: 'Write a password for your note',
+                  placeholder: 'Give a password for your note, do not lose it!',
                   name: 'password'
                 )
                 Button.confirm(doc, type: 'hidden', value: 'Create Note')
-              end
-
-              doc.form :action => '/', :method => 'GET', :class => 'form-horizontal' do
-                Button.confirm(doc, type: 'form', value: 'GO HOME')
               end
 
             end

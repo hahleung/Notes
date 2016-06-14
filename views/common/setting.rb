@@ -25,15 +25,17 @@ module View
             doc.button :type => "button", :class => "navbar-toggle collapsed", 'data-toggle' => "collapse", 'data-target' => "#navbar", 'aria-expanded' => "false", 'aria-controls' => "navbar" do
               doc.span :class => "sr-only" do doc.p "Toggle nav" end
               doc.span :class => "icon-bar"
-
+              doc.span :class => "icon-bar"
+              doc.span :class => "icon-bar"
             end
-            doc.a :class => "navbar-brand", :href => "#" do doc.p "NOTES" end
+            doc.a :class => "navbar-brand", :href => "/" do doc.p "NOTES" end
           end
           doc.div :id => "navbar", :class =>"navbar-collapse collapse" do
             doc.ul :class => "nav navbar-nav" do
               navbar = {
-                "Home" => "/welcome",
-
+                "Home" => "/",
+                "Tutorial" => "/tutorial",
+                "About" => "/about"
               }
               navbar.each do |key, value|
                 doc.li do
